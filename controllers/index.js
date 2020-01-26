@@ -1,3 +1,3 @@
 exports.getIndex = (req, res, next) => {
-    res.json("SOS Received!!")
+    res.json("API running!!")
 }
