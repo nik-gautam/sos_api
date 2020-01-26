@@ -57,3 +57,24 @@ exports.addUsers = (req, res, next) => {
         }
     })
 }
+
+exports.listUsers = (req, res, next) => {
+    let users = [];
+
+    User.find((err, results) => {
+        console.log(results);
+        console.log(err);
+
+        if (!err) {
+            res.json(results);
+            return;
+        } else {
+            res.json({
+                success: false,
+                err
+            });
+
+            return;
+        }
+    });
+}
