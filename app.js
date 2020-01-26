@@ -11,6 +11,8 @@ const MONGODB_URI = "mongodb+srv://nik:nik@cluster0-ymjnp.mongodb.net/sos?retryW
 
 const app = express();
 
+var port = process.env.PORT || 6900
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
@@ -27,7 +29,7 @@ mongoose.connect(MONGODB_URI, {
     useUnifiedTopology: true
 }).then(result => {
     console.log("DB Connected!!");
-    app.listen(6900);
+    app.listen(port);
 }).catch(err => {
     console.log(err);
 });
