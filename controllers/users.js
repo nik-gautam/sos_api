@@ -47,9 +47,7 @@ exports.addUsers = (req, res, next) => {
                     msg: "User already exits",
                 });
             }
-
             // res.json(result);
-
         } else {
             res.json({
                 success: false,
@@ -57,8 +55,5 @@ exports.addUsers = (req, res, next) => {
                 err
             });
         }
-
-
-
     })
 }
