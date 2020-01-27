@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 const MONGODB_URI = "mongodb+srv://nik:nik@cluster0-ymjnp.mongodb.net/sos?retryWrites=true&w=majority";
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
