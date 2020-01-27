@@ -52,4 +52,41 @@ exports.postSignUp = (req, res, next) => {
             });
         }
     })
-}
+};
+
+exports.postLogin = (req, res, next) => {
+    let user = req.body;
+
+    User.findOne({
+        email: user.email
+    }, (err, result) => {
+        if (!err) {
+            if (result) {
+                if (result.password === user.password) {
+                    res.json({
+                        success: true,
+                        uid: result._id,
+                        msg: "Login successful",
+                    });
+                } else {
+                    res.json({
+                        success: false,
+                        msg: "Login Failed! Password mismatch",
+                    });
+                }
+            } else {
+                res.json({
+                    success: false,
+                    msg: "Login Failed! Email Id mismatch",
+                });
+            }
+
+        } else {
+            res.json({
+                success: false,
+                msg: "Login Failed",
+                err
+            });
+        }
+    })
+};

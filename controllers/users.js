@@ -15,4 +15,8 @@ exports.listUsers = (req, res, next) => {
             return;
         }
     });
-}
+};
+
+// exports.getUser = (req, res, next) => {
+//     User.findById()
+// };
