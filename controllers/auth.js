@@ -29,7 +29,7 @@ exports.postSignUp = (req, res, next) => {
                         msg: "User added Sucessfully"
                     });
                 }).catch(err => {
-                    res.json({
+                    res.status(404).json({
                         success: false,
                         msg: "Failed to add user",
                         err
@@ -37,7 +37,7 @@ exports.postSignUp = (req, res, next) => {
                 });
 
             } else {
-                res.json({
+                res.status(404).json({
                     success: false,
                     uid: result._id,
                     msg: "User already exits",
@@ -45,7 +45,7 @@ exports.postSignUp = (req, res, next) => {
             }
             // res.json(result);
         } else {
-            res.json({
+            res.status(404).json({
                 success: false,
                 msg: "User already exits",
                 err
@@ -69,20 +69,20 @@ exports.postLogin = (req, res, next) => {
                         msg: "Login successful",
                     });
                 } else {
-                    res.json({
+                    res.status(404).json({
                         success: false,
                         msg: "Login Failed! Password mismatch",
                     });
                 }
             } else {
-                res.json({
+                res.status(404).json({
                     success: false,
                     msg: "Login Failed! Email Id mismatch",
                 });
             }
 
         } else {
-            res.json({
+            res.status(404).json({
                 success: false,
                 msg: "Login Failed",
                 err

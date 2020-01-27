@@ -7,7 +7,7 @@ exports.listUsers = (req, res, next) => {
             res.json(results);
             return;
         } else {
-            res.json({
+            res.status(404).json({
                 success: false,
                 err
             });
@@ -26,13 +26,13 @@ exports.getUser = (req, res, next) => {
                     result
                 });
             } else {
-                res.json({
+                res.status(404).json({
                     success: false,
                     msg: "User not found"
                 });
             }
         } else {
-            res.json({
+            res.status(404).json({
                 success: false,
                 err
             });
