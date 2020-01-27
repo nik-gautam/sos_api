@@ -2,10 +2,8 @@ const mongoose = require('mongoose')
 
 const User = require('../models/user');
 
-exports.addUsers = (req, res, next) => {
-    let user = req.query;
-
-    console.log(user.email);
+exports.postSignUp = (req, res, next) => {
+    let user = req.body;
 
     User.findOne({
         email: user.email
