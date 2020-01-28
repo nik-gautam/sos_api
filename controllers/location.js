@@ -58,3 +58,20 @@ exports.getNearby = (req, res, next) => {
         });
     });
 }
+
+exports.listLocations = (req, res, next) => {
+
+    Location.find((err, results) => {
+        if (!err) {
+            res.json(results);
+            return;
+        } else {
+            res.status(404).json({
+                success: false,
+                err
+            });
+
+            return;
+        }
+    });
+};
