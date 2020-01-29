@@ -1,4 +1,5 @@
-const Pusher = require('pusher')
+const Pusher = require('pusher');
+const fetch = require('node-fetch');
 
 const User = require('../models/user');
 const Sos = require('../models/sos');
@@ -91,6 +92,10 @@ exports.postEmergencyList = (req, res, next) => {
 
 exports.getSos = (req, res, next) => {
     let id = req.query.uid;
+    let lat = req.query.lat;
+    let long = req.query.long;
+    let max = req.query.max
+
     Location.find({
         uid: id
     }, (err, loc) => {
@@ -108,8 +113,23 @@ exports.getSos = (req, res, next) => {
                             });
 
                             result.save().then(resultt => {
+                                fetch(`https://still-lake-87096.herokuapp.com/loc/nearby?long=${long}&lat=${lat}`).then(response => {
+                                    for (let i = 0; i <= max; i++) {
+                                        pusher.trigger('nearby-channel', response.result[i].uid, {
+                                            "sos": true,
+                                            "uid": result.uid
+                                        });
+                                    }
+                                }).catch(err => {
+                                    res.status(404).json({
+                                        success: false,
+                                        err
+                                    });
+                                })
+
                                 pusher.trigger('sos-channel', req.query.uid, {
-                                    "sos": true
+                                    "sos": true,
+                                    "uid": result.uid
                                 });
                                 res.json({
                                     success: true,
