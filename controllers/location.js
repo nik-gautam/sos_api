@@ -30,7 +30,7 @@ exports.postLatLong = (req, res, next) => {
 }
 
 
-// Ye code jisne chuu diya usse,usse kalle ki baahu ka shraap lagega 
+// Ye code jisne chuu diya, usse kalle ki baahu ka shraap lagega 
 exports.getNearby = (req, res, next) => {
     let coor = req.query;
 
@@ -65,6 +65,33 @@ exports.listLocations = (req, res, next) => {
         if (!err) {
             res.json(results);
             return;
+        } else {
+            res.status(404).json({
+                success: false,
+                err
+            });
+
+            return;
+        }
+    });
+};
+
+exports.getLocation = (req, res, next) => {
+    Location.find({
+        uid: req.query.uid
+    }, (err, result) => {
+        if (!err) {
+            if (result) {
+                res.json({
+                    success: true,
+                    result
+                });
+            } else {
+                res.status(404).json({
+                    success: false,
+                    msg: "Location not found"
+                });
+            }
         } else {
             res.status(404).json({
                 success: false,

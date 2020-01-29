@@ -15,7 +15,7 @@ exports.listUsers = (req, res, next) => {
             return;
         }
     });
-};
+}
 
 exports.getUser = (req, res, next) => {
     User.findById(req.query.id, (err, result) => {
@@ -40,4 +40,39 @@ exports.getUser = (req, res, next) => {
             return;
         }
     });
-};
+}
+
+exports.postEmergencyList = (req, res, next) => {
+    let elist = req.body;
+
+    User.findById(elist.uid, (err, result) => {
+        if (!err) {
+            if (result) {
+                result.emergency_contact.push(...elist.econtacts);
+
+                result.save().then(resultt => {
+                    res.json({
+                        success: true,
+                        msg: "Emergency List successfully updated",
+                        uid: resultt._id
+                    });
+                }).catch(err => {
+                    res.status(404).json({
+                        success: false,
+                        err
+                    });
+                })
+            } else {
+                res.status(404).json({
+                    success: false,
+                    msg: "User not found"
+                });
+            }
+        } else {
+            res.status(404).json({
+                success: false,
+                err
+            });
+        }
+    });
+}
