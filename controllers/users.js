@@ -1,5 +1,5 @@
 const Pusher = require('pusher');
-const fetch = require('node-fetch');
+const request = require('request')
 
 const User = require('../models/user');
 const Sos = require('../models/sos');
@@ -112,36 +112,51 @@ exports.getSos = (req, res, next) => {
                                 geometry: loc.geometry
                             });
 
-                            result.save().then(resultt => {
-                                fetch(`https://still-lake-87096.herokuapp.com/loc/nearby?long=${long}&lat=${lat}`).then(response => {
-                                    for (let i = 0; i <= max; i++) {
-                                        pusher.trigger('nearby-channel', response.result[i].uid, {
-                                            "sos": true,
-                                            "uid": result.uid
-                                        });
-                                    }
+                            result.save()
+                                .then(resultt => {
+                                    request.get({
+                                        method: 'GET',
+                                        uri: `https://still-lake-87096.herokuapp.com/loc/nearby?long=${long}&lat=${lat}`,
+                                        json: true
+                                    }, (error, response, body) => {
+
+                                        if (!error) {
+                                            for (let i = 0; i < max; i++) {
+
+                                                if (body.success === true) {
+                                                    console.log(body.result[i].uid);
+
+                                                    pusher.trigger('nearby-channel', body.result[i].uid, {
+                                                        "sos": true,
+                                                        "uid": result.uid
+                                                    });
+                                                }
+                                            }
+                                            pusher.trigger('sos-channel', req.query.uid, {
+                                                "sos": true,
+                                                "uid": result.uid
+                                            });
+                                            res.json({
+                                                success: true,
+                                                msg: "Previos SOS List successfully updated",
+                                                uid: result.uid
+                                            });
+                                        } else {
+                                            res.status(404).json({
+                                                success: false,
+                                                error
+                                            });
+
+                                            return;
+                                        }
+                                    })
+
                                 }).catch(err => {
                                     res.status(404).json({
                                         success: false,
                                         err
                                     });
                                 })
-
-                                pusher.trigger('sos-channel', req.query.uid, {
-                                    "sos": true,
-                                    "uid": result.uid
-                                });
-                                res.json({
-                                    success: true,
-                                    msg: "Previos SOS List successfully updated",
-                                    uid: result.uid
-                                });
-                            }).catch(err => {
-                                res.status(404).json({
-                                    success: false,
-                                    err
-                                });
-                            })
 
 
                         } else {
