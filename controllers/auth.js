@@ -14,10 +14,6 @@ exports.postSignUp = (req, res, next) => {
                     email: user.email,
                     phone: parseInt(user.phone, 10),
                     address: user.address,
-                    sos: {
-                        isTrue: false,
-                        previous_sos: []
-                    },
                     password: user.password,
                     emergency_contact: []
                 });

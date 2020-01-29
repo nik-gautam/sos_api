@@ -19,20 +19,6 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    sos: {
-        isTrue: {
-            type: Boolean,
-            required: true
-        },
-        previous_sos: [{
-            date: {
-                type: String,
-            },
-            time: {
-                type: Number,
-            }
-        }]
-    },
     password: {
         type: String,
         required: true
