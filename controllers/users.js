@@ -241,3 +241,18 @@ exports.getSos = (req, res, next) => {
         }
     });
 }
+
+exports.getAllSos = (req, res, test) => {
+    Sos.find((err, results) => {
+        if (!err) {
+            res.json(results);
+            return;
+        } else {
+            res.status(404).json({
+                success: false,
+                err
+            });
+            return;
+        }
+    });
+}
