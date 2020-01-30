@@ -136,13 +136,21 @@ exports.getSos = (req, res, next) => {
 
                                                     pusher.trigger('nearby-channel', body.result[i].uid, {
                                                         "sos": true,
-                                                        "uid": result.uid
+                                                        "uid": result.uid,
+                                                        "coordinates": {
+                                                            "long": long,
+                                                            "lat": lat
+                                                        }
                                                     });
                                                 }
                                             }
                                             pusher.trigger('sos-channel', 'common', {
                                                 "sos": true,
-                                                "uid": result.uid
+                                                "uid": result.uid,
+                                                "coordinates": {
+                                                    "long": long,
+                                                    "lat": lat
+                                                }
                                             });
                                             res.json({
                                                 success: true,
@@ -197,13 +205,21 @@ exports.getSos = (req, res, next) => {
 
                                                 pusher.trigger('nearby-channel', body.result[i].uid, {
                                                     "sos": true,
-                                                    "uid": result.uid
+                                                    "uid": result.uid,
+                                                    "coordinates": {
+                                                        "long": long,
+                                                        "lat": lat
+                                                    }
                                                 });
                                             }
                                         }
                                         pusher.trigger('sos-channel', 'common', {
                                             "sos": true,
-                                            "uid": result.uid
+                                            "uid": result.uid,
+                                            "coordinates": {
+                                                "long": long,
+                                                "lat": lat
+                                            }
                                         });
                                         res.json({
                                             success: true,
