@@ -107,9 +107,13 @@ exports.getSos = (req, res, next) => {
                 }, (err, result) => {
                     if (!err) {
                         if (result) {
+                            console.log(loc.geometry);
+
                             result.previous_sos.push({
                                 date: new Date(),
-                                geometry: loc.geometry
+                                geometry: {
+                                    coordinates: [parseFloat(long), parseFloat(lat)]
+                                }
                             });
 
                             result.save()
@@ -138,7 +142,7 @@ exports.getSos = (req, res, next) => {
                                             });
                                             res.json({
                                                 success: true,
-                                                msg: "Previos SOS List successfully updated",
+                                                msg: "Previous SOS List successfully updated",
                                                 uid: result.uid
                                             });
                                         } else {
@@ -164,20 +168,49 @@ exports.getSos = (req, res, next) => {
                                 uid: req.query.uid,
                                 previous_sos: [{
                                     date: new Date(),
-                                    geometry: loc.geometry
+                                    geometry: {
+                                        coordinates: [parseFloat(long), parseFloat(lat)]
+                                    }
                                 }]
                             })
 
                             newSos.save().then((result) => {
-                                pusher.trigger('sos-channel', req.query.uid, {
-                                    "sos": true
-                                });
+                                request.get({
+                                    method: 'GET',
+                                    uri: `https://still-lake-87096.herokuapp.com/loc/nearby?long=${long}&lat=${lat}`,
+                                    json: true
+                                }, (error, response, body) => {
 
-                                res.json({
-                                    success: true,
-                                    uid: result.uid,
-                                    msg: "Sos sent"
-                                });
+                                    if (!error) {
+                                        for (let i = 0; i < max; i++) {
+
+                                            if (body.success === true) {
+                                                console.log(body.result[i].uid);
+
+                                                pusher.trigger('nearby-channel', body.result[i].uid, {
+                                                    "sos": true,
+                                                    "uid": result.uid
+                                                });
+                                            }
+                                        }
+                                        pusher.trigger('sos-channel', req.query.uid, {
+                                            "sos": true,
+                                            "uid": result.uid
+                                        });
+                                        res.json({
+                                            success: true,
+                                            msg: "Previous SOS List successfully updated",
+                                            uid: result.uid
+                                        });
+                                    } else {
+                                        res.status(404).json({
+                                            success: false,
+                                            error
+                                        });
+
+                                        return;
+                                    }
+                                })
                             }).catch(err => {
                                 res.status(404).json({
                                     success: false,
