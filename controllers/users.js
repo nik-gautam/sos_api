@@ -140,7 +140,7 @@ exports.getSos = (req, res, next) => {
                                                     });
                                                 }
                                             }
-                                            pusher.trigger('sos-channel', req.query.uid, {
+                                            pusher.trigger('sos-channel', 'common', {
                                                 "sos": true,
                                                 "uid": result.uid
                                             });
@@ -201,7 +201,7 @@ exports.getSos = (req, res, next) => {
                                                 });
                                             }
                                         }
-                                        pusher.trigger('sos-channel', req.query.uid, {
+                                        pusher.trigger('sos-channel', 'common', {
                                             "sos": true,
                                             "uid": result.uid
                                         });
