@@ -125,10 +125,13 @@ exports.getSos = (req, res, next) => {
                                     }, (error, response, body) => {
 
                                         if (!error) {
+                                            if (max > body.result.length) {
+                                                max = body.result.length
+                                            }
                                             for (let i = 0; i < max; i++) {
 
                                                 if (body.success === true) {
-                                                    console.log(body.result[i].uid);
+                                                    // console.log(body.result[i].uid);
 
                                                     pusher.trigger('nearby-channel', body.result[i].uid, {
                                                         "sos": true,
@@ -180,6 +183,10 @@ exports.getSos = (req, res, next) => {
                                     uri: `https://still-lake-87096.herokuapp.com/loc/nearby?long=${long}&lat=${lat}`,
                                     json: true
                                 }, (error, response, body) => {
+
+                                    if (max > body.result.length) {
+                                        max = body.result.length
+                                    }
 
                                     if (!error) {
                                         for (let i = 0; i < max; i++) {
