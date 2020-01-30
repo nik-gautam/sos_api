@@ -90,6 +90,7 @@ exports.postEmergencyList = (req, res, next) => {
     });
 }
 
+// The code below is very in-efficient and slow... But it works.. so f.u.
 exports.getSos = (req, res, next) => {
     let id = req.query.uid;
     let lat = req.query.lat;
