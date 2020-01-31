@@ -52,6 +52,7 @@ exports.getNearby = (req, res, next) => {
 
         for (let i = 0; i < result.length; i++) {
             ans.push({
+                uid: result[i].uid,
                 lat: result[i].geometry.coordinates[1],
                 long: result[i].geometry.coordinates[0]
             });
