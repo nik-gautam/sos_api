@@ -47,9 +47,19 @@ exports.getNearby = (req, res, next) => {
         spherical: true,
         distanceField: "dis"
     }).then(result => {
+
+        let ans = [];
+
+        for (let i = 0; i < result.length; i++) {
+            ans.push({
+                lat: result[i].geometry.coordinates[1],
+                long: result[i].geometry.coordinates[0]
+            });
+        }
+
         res.json({
             success: true,
-            result
+            ans
         });
     }).catch(err => {
         res.status(404).send({

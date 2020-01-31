@@ -133,7 +133,7 @@ exports.getSos = (req, res, next) => {
 
                                                 if (body.success === true) {
                                                     // console.log(body.result[i].uid);
-
+                                                    console.log(body.result[i].uid);
                                                     pusher.trigger('nearby-channel', body.result[i].uid, {
                                                         "sos": true,
                                                         "uid": result.uid,
@@ -144,6 +144,8 @@ exports.getSos = (req, res, next) => {
                                                     });
                                                 }
                                             }
+                                            console.log(result.uid);
+
                                             pusher.trigger('sos-channel', 'common', {
                                                 "sos": true,
                                                 "uid": result.uid,
@@ -199,6 +201,7 @@ exports.getSos = (req, res, next) => {
 
                                     if (!error) {
                                         for (let i = 0; i < max; i++) {
+                                            console.log(body.result[i].uid);
 
                                             if (body.success === true) {
                                                 console.log(body.result[i].uid);
@@ -213,6 +216,8 @@ exports.getSos = (req, res, next) => {
                                                 });
                                             }
                                         }
+                                        console.log(result.uid);
+
                                         pusher.trigger('sos-channel', 'common', {
                                             "sos": true,
                                             "uid": result.uid,
