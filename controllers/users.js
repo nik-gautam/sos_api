@@ -95,7 +95,8 @@ exports.getSos = (req, res, next) => {
     let id = req.query.uid;
     let lat = req.query.lat;
     let long = req.query.long;
-    let max = req.query.max
+    let max = req.query.max;
+    let level = req.query.level;
 
     Location.find({
         uid: id
@@ -140,7 +141,8 @@ exports.getSos = (req, res, next) => {
                                                         "coordinates": {
                                                             "long": long,
                                                             "lat": lat
-                                                        }
+                                                        },
+                                                        "level": level
                                                     });
                                                 }
                                             }
@@ -152,8 +154,10 @@ exports.getSos = (req, res, next) => {
                                                 "coordinates": {
                                                     "long": long,
                                                     "lat": lat
-                                                }
+                                                },
+                                                "level": level
                                             });
+
                                             res.json({
                                                 success: true,
                                                 msg: "Previous SOS List successfully updated",
@@ -212,7 +216,8 @@ exports.getSos = (req, res, next) => {
                                                     "coordinates": {
                                                         "long": long,
                                                         "lat": lat
-                                                    }
+                                                    },
+                                                    "level": level
                                                 });
                                             }
                                         }
@@ -224,7 +229,8 @@ exports.getSos = (req, res, next) => {
                                             "coordinates": {
                                                 "long": long,
                                                 "lat": lat
-                                            }
+                                            },
+                                            "level": level
                                         });
                                         res.json({
                                             success: true,
