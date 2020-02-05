@@ -9,7 +9,7 @@ const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const locationRouter = require('./routes/location');
 
-const MONGODB_URI = "mongodb+srv://nik:nik@cluster0-ymjnp.mongodb.net/sos?retryWrites=true&w=majority";
+const MONGODB_URI = "";
 
 const app = express();
 

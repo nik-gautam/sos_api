@@ -6,10 +6,10 @@ const Sos = require('../models/sos');
 const Location = require('../models/location');
 
 let pusher = new Pusher({
-    appId: '939281',
-    key: '8d9b4faca051e85c76ba',
-    secret: '84ebe0a6905a55e6f3ec',
-    cluster: 'ap2',
+    appId: '',
+    key: '',
+    secret: '',
+    cluster: '',
     encrypted: true
 });
 
@@ -122,7 +122,7 @@ exports.getSos = (req, res, next) => {
                                 .then(resultt => {
                                     request.get({
                                         method: 'GET',
-                                        uri: `https://still-lake-87096.herokuapp.com/loc/nearby?long=${long}&lat=${lat}`,
+                                        uri: `https://somewhere.com/loc/nearby?long=${long}&lat=${lat}`,
                                         json: true
                                     }, (error, response, body) => {
 
@@ -195,7 +195,7 @@ exports.getSos = (req, res, next) => {
                             newSos.save().then((result) => {
                                 request.get({
                                     method: 'GET',
-                                    uri: `https://still-lake-87096.herokuapp.com/loc/nearby?long=${long}&lat=${lat}`,
+                                    uri: `https://somewhere.com/loc/nearby?long=${long}&lat=${lat}`,
                                     json: true
                                 }, (error, response, body) => {
 
