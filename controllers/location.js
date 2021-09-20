@@ -30,7 +30,6 @@ exports.postLatLong = (req, res, next) => {
 }
 
 
-// Ye code jisne chuu diya, usse kalle ki baahu ka shraap lagega 
 exports.getNearby = (req, res, next) => {
     let coor = req.query;
 
